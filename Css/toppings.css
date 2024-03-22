@@ -2,6 +2,7 @@
     padding: 24px 0;
 }
 
+
 .topping__title {
     position: fixed;
     transform: scale(0);
@@ -63,3 +64,39 @@
     background: var(--orange);
     color: var(--light);
 }
+
+@media (width >= 620px) {
+.toppings {
+    padding: 32px 0;
+}
+.toppings__button {
+    font-size: 24px;
+}
+
+.toppings__label {
+    font-size: 20px;
+}
+
+}
+
+@media (width >= 860px) {
+    .toppings__button {
+        display: none;
+    }
+
+    .topping__title {
+        position: static;
+        transform: none;
+        font-weight: 600;
+        font-size: 24px;
+        color: var(--dark);
+        margin-bottom: 16px;
+    }
+
+    .toppings__list {
+        display: flex;
+        max-height: none;
+    
+    }
+}
+

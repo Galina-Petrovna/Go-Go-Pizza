@@ -10,15 +10,29 @@
     align-items: center;
     justify-content: space-between;
     gap: 30px;
+    /* padding: 0 14px; */
+    
 }
 .header__logo {
     width: 120px;
 }
 .header__cart {
-    color: var (--dark);
+    color: var(--dark);
 }
 
 .header__cart:hover {
-    color: var (--orange);
+    color: var(--orange);
 }
+
+@media (width >= 620px) {
+    .header {
+        top: 24px;
+    }
+    .header__logo {
+        width: 164px;
+    }
+   
+}
+
+
 

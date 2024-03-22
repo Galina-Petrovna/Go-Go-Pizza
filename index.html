@@ -8,11 +8,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
-    
+    <script src="Js/script.js" type="module"></script>
+
 </head>
 <body>
     <header class="header">
-        <div class="header__container">
+        <div class="container header__container">
             <img class="header__logo" src="Img/logo.svg" alt="Логотип Go Go Pizza">
 
             <button class="header__cart" aria-label="Открыть корзину">
@@ -26,13 +27,15 @@
        
     <main>
         <section class="hero">
-            <div class="hero__container">
+            <div class="container hero__container">
+                
                 <div class="hero__content">
                     <h1 class="hero__title">Лучшая пицца
                         в&nbsp;городе</h1>
                     <p class="hero__tagline">Доставим менее чем за&nbsp;час</p>
                     <button class="hero__order">Заказать</button>
                 </div>
+                
             </div>
         </section>
 
@@ -298,25 +301,4 @@
 </body>
 
 <script>
-    const toppingsButton = document.querySelector('.toppings__button');
-    const toppingsList = document.querySelector('.toppings__list');
-
-    toppingsButton.addEventListener('click', () => {
-        if (!toppingsList.classList.contains('toppings__list_show')) {
-            toppingsList.classList.add('toppings__list_show');
-            toppingsButton.classList.add('toppings__button_active');
-
-            toppingsList.style.maxHeight = toppingsList.scrollHeight + "px";
-        } else {
-            toppingsButton.classList.remove ('toppings__button_active');
-            toppingsList.style.maxHeight = null;
-        
-
-        setTimeout(() => {
-            toppingsList.classList.remove('toppings__list_show');
-        }, 300) 
-    } 
     
-    })
-</script>
-</html>
