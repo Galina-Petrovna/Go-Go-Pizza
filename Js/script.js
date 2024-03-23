@@ -40,19 +40,19 @@ const createCard = (data) => {
     card.innerHTML = `
     <picture>
     <source srcset="${data.images[1]}" type="image/webp">
-        <img class="card__image" src="${data.images[1]}" alt="${data.name.ru}">
+        <img class="card__image" src="${data.images[0]}" alt="${data.name.ru}">
 
     </picture>
                            
     <div class="card__content">
-        <h3 class="card__title">${data.name.ru}</h3>
+        <h3 class="card__title">${data.name.ru[0].toUpperCase()}${data.name.ru.slice(1).toLowerCase() }</h3>
         <p class="card__info">
-            <span class="card__price">480 ₽</span>
+            <span class="card__price">${data.price['25cm']} ₽</span>
             <span>/</span>
             <span card__weight>25 см</span>
         </p>
     
-        <button class="card__button">Выбрать</button>
+        <button class="card__button" data-id="${data.id}">Выбрать</button>
     </div>
     `;
     return card;
@@ -65,7 +65,7 @@ const renderPizzas = async () => {
 
     const items = pizzas.map((data) => {
         const item = document.createElement('li');
-        item.classList.add('pizza__item');
+        item.classList.add('pizza__item', 'pizza__card');
 
         const card = createCard(data);
         item.append(card);

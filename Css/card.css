@@ -1,6 +1,8 @@
 .card {
     position: relative;
     padding-top: 35px;
+    display: flex;
+    flex-direction: column;
 }
 .card__image {
     position: absolute;
@@ -10,37 +12,46 @@
     width: 80px;
 }
 .card__content {
+    display: flex;
+    flex-direction: column;
     background: var(--white);
     padding: 48px 8px 8px;
-    border-radius: 32px;
+    border-radius: 16px;
+    flex-grow: 1;
+
 }
 .card__title {
     font-weight: 600;
     font-size: 14px;
     text-align: center;
     color: var(--dark);
+    flex-grow: 1;
     margin-bottom: 4px;
+
 }
 .card__info {
     display: flex;
     justify-content: center;
-    gap: 4px;
+    
     font-size: 14px;
     color: var(--beige);
-    margin-bottom: 4px;
+    margin-bottom: 16px;
 }
 .card__price {
     font-weight: 600;
     color: var(--dark);
     margin-bottom: 16px;
+    
 }
 .card__button {
+    display: block;
     width: 100%;
     font-size: 14px;
     color: var(--orange);
     padding: 8px 24px;
     background: var(--light);
     border-radius: 32px;
+    
 }
 
 @media (width >= 620px) {
