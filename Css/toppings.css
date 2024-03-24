@@ -52,6 +52,11 @@
     font-size: 14px;
     color: var(--beige);
     border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.toppings__label:hover {
+    color: var(--orange);
 }
 
 .toppings__checkbox:focus-visible+.toppings__label {
@@ -64,6 +69,34 @@
     background: var(--orange);
     color: var(--light);
 }
+
+
+.toppings__reset {
+    display: block;
+    font-weight: 600;
+    background: var(--white);
+    border-radius: 32px;
+    line-height: 1.4;
+    padding: 8px 24px;
+    font-size: 14px;
+    color: var(--orange);
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.toppings__reset:hover {
+    color: var(--beige);
+    background: var(--orange);
+
+}
+
+.toppings__reset:focus-visible {
+    background: var(--white);
+    border-color: #b66200;
+    color: var(--orange);
+}
+
+
 
 @media (width >= 620px) {
 .toppings {
@@ -97,6 +130,10 @@
         display: flex;
         max-height: none;
     
+    }
+
+    .toppings__reset{
+        font-size: 20px;
     }
 }
 
