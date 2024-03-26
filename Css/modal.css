@@ -13,7 +13,6 @@
 .modal__main {
     position: relative;
     cursor: default;
-    padding: 16px;
     background: var(--white);
     margin: auto;
     
@@ -25,7 +24,5 @@
     right: 25px;
 }
 
-.modal-pizza__main {
-    max-width: 368px;
-}
+
 
