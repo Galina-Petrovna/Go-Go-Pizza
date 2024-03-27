@@ -1,5 +1,6 @@
 import { getData } from "./getData.js";
 import { modalController } from "./modalController.js";
+import { renderModalPizza } from "./renderModalPizza.js";
 
 const btnReset = document.createElement('button');
 btnReset.classList.add('pizza__reset-toppings');
@@ -37,7 +38,7 @@ export const createCard = (data) => {
 
 export const renderPizzas = async (toppings) => {
     const pizzas = await getData(
-        `https://elderly-scrawny-radius.glitch.me/Api/products${
+        `https://go-go-pizza-api-5rt4.onrender.com/api/products${
         toppings ? `?toppings=${toppings}` : ''
         }`,
     );
@@ -64,10 +65,16 @@ export const renderPizzas = async (toppings) => {
             modal: ".modal-pizza",
             btnOpen: '.card__button',
             btnClose: '.modal__close',
-            cbOpen(btnOpen) {
-                console.log ('btnOpen', btnOpen.dataset.id);
-            }
-        })
+           async cbOpen(btnOpen) {
+                 const pizza= await getData(
+                    `https://go-go-pizza-api-5rt4.onrender.com/api/products/${btnOpen.dataset.id}
+                    `,
+                );
+
+                console.log(pizza);
+                renderModalPizza(pizza);
+            },
+        });
     } else {
         pizzaTitle.textContent = 'Такой пиццы у нас нет :('
         pizzaTitle.after(btnReset);
