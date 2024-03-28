@@ -1,3 +1,5 @@
+import { changeFirstUpperCase } from "./helpers.js";
+
 export const renderModalPizza = ({ id, images, name, price, toppings }) => {
  const modalPizzaMain = document.querySelector('.modal-pizza__main');
  modalPizzaMain.textContent = '';
@@ -16,21 +18,53 @@ export const renderModalPizza = ({ id, images, name, price, toppings }) => {
  img.alt = name.ru;
  picture.append(source, img);
 
- modalPizzaMain.append(picture)
+const title = document.createElement('h2');
+title.classList.add('modal-pizza__title');
+title.textContent = changeFirstUpperCase(name.ru);
+
+const toppingsElement = document.createElement('p');
+toppingsElement.classList.add('modal-pizza__toppings');
+toppingsElement.textContent = changeFirstUpperCase(toppings.ru);
+
+const priceSizeInfo = document.createElement('p');
+priceSizeInfo.classList.add('modal-pizza__info');
+
+const priceElement = document.createElement('span');
+priceElement.classList.add('modal-pizza__price');
+const slashElement = document.createElement('span');
+slashElement.textContent = '/'
+
+const sizeElement = document.createElement('span');
+sizeElement.classList.add('modal-pizza__size');
+
+priceSizeInfo.append(priceElement, slashElement, sizeElement);
+
+  const  form = document.createElement('div');
+  form.classList.add('modal-pizza__form');
+
+  const groupFieldset = document.createElement('div');
+  groupFieldset.classList.add('.modal-pizza__group-fieldset');
+
+const fieldCrust = document.createElement('fieldset');
+fieldCrust.classList.add('.modal-pizza__fieldset');
+
+
+const fieldSize = document.createElement('fieldset');
+fieldSize.classList.add('.modal-pizza__fieldset');
+
+groupFieldset.append(fieldCrust, fieldSize)
+
+const addToCartBtn = document.createElement('button');
+
+form.append(groupFieldset, addToCartBtn)
+
+ modalPizzaMain.append(picture, title, toppingsElement,priceSizeInfo, form)
 }
 
 
 
-{/* <img class="modal-pizza__img" src="Img/pizza-capricciosa-view-from-above-without-backgrou.png" alt="Капричоза">
-<h2 class="modal-pizza__title">Капричоза</h2>
+{/* 
 
-<p class="modal-pizza__toppings">Грибы, сыр</p>
-
-<p class="modal-pizza__info">
-    <span class="modal-pizza__price">350</span>
-    <span>/</span>
-    <span class="modal-pizza__size"> 25 см</span>
-</p>
 
 <form class="modal-pizza__form" >
     <div class="modal-pizza__group-fieldset">
