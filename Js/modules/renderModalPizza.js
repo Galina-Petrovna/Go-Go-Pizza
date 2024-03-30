@@ -1,4 +1,7 @@
-import { changeFirstUpperCase } from "./helpers.js";
+import { changeFirstUpperCase, createLabel, createRadioInput } from "./helpers.js";
+import { cartControl } from "./cartControl.js";
+
+
 
 export const renderModalPizza = ({ id, images, name, price, toppings }) => {
  const modalPizzaMain = document.querySelector('.modal-pizza__main');
@@ -39,64 +42,100 @@ sizeElement.classList.add('modal-pizza__size');
 
 priceSizeInfo.append(priceElement, slashElement, sizeElement);
 
-  const  form = document.createElement('div');
+const upDatePrice = () => {
+    const selectedSizeInput = form.querySelector('input[name="size"]:checked');
+    size = selectedSizeInput.value;
+    priceElement.textContent = `${price[size]} ₽`
+    sizeElement.textContent = `${parseInt(size)} см`
+
+    };
+
+  const form = document.createElement('form');
+  form.id = id;
   form.classList.add('modal-pizza__form');
 
   const groupFieldset = document.createElement('div');
-  groupFieldset.classList.add('.modal-pizza__group-fieldset');
+  groupFieldset.classList.add('modal-pizza__group-fieldset');
 
-const fieldCrust = document.createElement('fieldset');
-fieldCrust.classList.add('.modal-pizza__fieldset');
+const fieldsetCrust = document.createElement('fieldset');
+fieldsetCrust.classList.add('modal-pizza__fieldset');
+
+const thickInput = createRadioInput('modal-pizza__radio', 'thick', 'crust', 'thick')
+const thickLabel =  createLabel('modal-pizza__label', 'thick', 'Пышное тесто')
+
+const thinInput = createRadioInput('modal-pizza__radio', 'thin', 'crust', 'thin')
+thinInput.checked = true;
+
+const thinLabel =  createLabel('modal-pizza__label', 'thin', 'Тонкое тесто')
 
 
-const fieldSize = document.createElement('fieldset');
-fieldSize.classList.add('.modal-pizza__fieldset');
+fieldsetCrust.append(thickInput, thickLabel, thinInput, thinLabel)
 
-groupFieldset.append(fieldCrust, fieldSize)
+const fieldsetSize = document.createElement('fieldset');
+fieldsetSize.classList.add('modal-pizza__fieldset');
+
+const sizeInputs = Object.keys(price).map(size => createRadioInput('modal-pizza__radio', size, 'size', size));
+sizeInputs[0].checked = true;
+
+sizeInputs.forEach(input => {
+    const label = createLabel('modal-pizza__label', input.id, `${parseInt(input.value)} см`);
+    input.addEventListener('change', upDatePrice);
+    fieldsetSize.append(input, label);
+});
+
+groupFieldset.append(fieldsetCrust, fieldsetSize)
 
 const addToCartBtn = document.createElement('button');
+addToCartBtn.classList.add('modal-pizza__add-cart');
+addToCartBtn.textContent = 'В корзину';
 
 form.append(groupFieldset, addToCartBtn)
 
- modalPizzaMain.append(picture, title, toppingsElement,priceSizeInfo, form)
-}
-
-
-
-{/* 
-
-
-<form class="modal-pizza__form" >
-    <div class="modal-pizza__group-fieldset">
-        <fieldset class="modal-pizza__fieldset">
-            <input class="modal-pizza__radio"  id="thick" type="radio" name="crust" value="thick"> 
-            <Label class="modal-pizza__label" for="thick">Пышное тесто</Label>
-
-            <input class="modal-pizza__radio"  id="thin" type="radio" name="crust" value="thin" checked> 
-            <Label class="modal-pizza__label" for="thin">Тонкое тесто</Label>
-
-        </fieldset>
-
-        <fieldset class="modal-pizza__fieldset">
-            <input class="modal-pizza__radio"  id="25cm" type="radio" name="size" value="25cm" checked> 
-            <Label class="modal-pizza__label" for="25cm">25 см</Label>
-
-            <input class="modal-pizza__radio"  id="20cm" type="radio" name="size" value="20cm"> 
-            <Label class="modal-pizza__label" for="20cm">30 см</Label>
-
-            <input class="modal-pizza__radio"  id="35cm" type="radio" name="size" value="35cm"> 
-            <Label class="modal-pizza__label" for="35cm">35 см</Label>
-
-        </fieldset>
-    </div>
-    
-
-    <button class="modal-pizza__add-cart">В корзину</button>
-</form>
-
-<button class="modal__close">
+const closeBtn = document.createElement('button');
+closeBtn.classList.add('modal__close');
+closeBtn.innerHTML = `
     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="10.8333" width="0.851136" height="15.3204" transform="rotate(45 10.8333 0)" fill="#C1AB91"/>
         <rect y="0.601837" width="0.851136" height="15.3204" transform="rotate(-45 0 0.601837)" fill="#C1AB91"/>
     </svg>
-</button> */}
+`;
+
+ modalPizzaMain.append(picture, title, toppingsElement,priceSizeInfo, form, closeBtn)
+ 
+    upDatePrice();
+
+    let timerId = -1;
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        const product = {
+            cartId: crypto.randomUUID(),
+            id,
+            crust: formData.get('crust'),
+            size: formData.get('size'),
+        };
+
+        cartControl.addCart(product);
+
+        addToCartBtn.disabled = true;
+        addToCartBtn.textContent = 'Добавлено';
+
+        timerId = setTimeout(() => {
+            addToCartBtn.disabled = false;
+            addToCartBtn.textContent = 'В корзину';
+        }, 3000);
+    });
+
+    form.addEventListener('change', () => {
+        clearTimeout(timerId);
+        addToCartBtn.disabled = false;
+        addToCartBtn.textContent = 'В корзину';
+    })
+
+}
+
+
+
